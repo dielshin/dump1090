@@ -190,8 +190,6 @@ function initialize() {
         // Set page basics
         document.title = PageName;
 
-        flightFeederCheck();
-
         PlaneRowTemplate = document.getElementById("plane_row_template");
 
         refreshClock();
@@ -908,7 +906,7 @@ function refreshSelected() {
         } else {
                 $('#selected_callsign').text('n/a');
         }
-        $('#selected_flightaware_link').html(getFlightAwareModeSLink(selected.icao, selected.flight, "Visit Flight Page"));
+        $('#selected_flightradar_link').html(getFlightRadarModeSLink(selected.icao, selected.flight, "Visit Flight Page"));
 
         if (selected.registration !== null) {
                 $('#selected_registration').text(selected.registration);
@@ -997,7 +995,7 @@ function refreshSelected() {
         $('#selected_sitedist').text(format_distance_long(selected.sitedist, DisplayUnits));
         $('#selected_rssi').text(selected.rssi.toFixed(1) + ' dBFS');
         $('#selected_message_count').text(selected.messages);
-		$('#selected_photo_link').html(getFlightAwarePhotoLink(selected.registration));
+		$('#selected_photo_link').html(getFlightRadarPhotoLink(selected.registration));
 		
 		$('#selected_altitude_geom').text(format_altitude_long(selected.alt_geom, selected.geom_rate, DisplayUnits));
         $('#selected_mag_heading').text(format_track_long(selected.mag_heading));
@@ -1232,7 +1230,7 @@ function refreshTableInfo() {
 
         // ICAO doesn't change
         if (tableplane.flight) {
-                tableplane.tr.cells[2].innerHTML = getFlightAwareModeSLink(tableplane.icao, tableplane.flight, tableplane.flight);
+                tableplane.tr.cells[2].innerHTML = getFlightRadarModeSLink(tableplane.icao, tableplane.flight, tableplane.flight);
         } else {
                 tableplane.tr.cells[2].innerHTML = "";
         }
@@ -1251,8 +1249,8 @@ function refreshTableInfo() {
         tableplane.tr.cells[15].textContent = (tableplane.position !== null ? tableplane.position[0].toFixed(4) : "");
         tableplane.tr.cells[16].textContent = format_data_source(tableplane.getDataSource());
         tableplane.tr.cells[17].innerHTML = getAirframesModeSLink(tableplane.icao);
-        tableplane.tr.cells[18].innerHTML = getFlightAwareModeSLink(tableplane.icao, tableplane.flight);
-        tableplane.tr.cells[19].innerHTML = getFlightAwarePhotoLink(tableplane.registration);
+        tableplane.tr.cells[18].innerHTML = getFlightRadarModeSLink(tableplane.icao, tableplane.flight);
+        tableplane.tr.cells[19].innerHTML = getFlightRadarPhotoLink(tableplane.registration);
         tableplane.tr.className = classes;
 	}
 }
@@ -1562,8 +1560,8 @@ function setColumnVisibility() {
     showColumn(infoTable, "#lon", !mapIsVisible);
     showColumn(infoTable, "#data_source", !mapIsVisible);
     showColumn(infoTable, "#airframes_mode_s_link", !mapIsVisible);
-    showColumn(infoTable, "#flightaware_mode_s_link", !mapIsVisible);
-    showColumn(infoTable, "#flightaware_photo_link", !mapIsVisible);
+    showColumn(infoTable, "#flightradar_mode_s_link", !mapIsVisible);
+    showColumn(infoTable, "#flightradar_photo_link", !mapIsVisible);
 }
 
 function setSelectedInfoBlockVisibility() {
@@ -1791,37 +1789,27 @@ function updatePlaneFilter() {
     PlaneFilter.altitudeUnits = DisplayUnits;
 }
 
-function getFlightAwareIdentLink(ident, linkText) {
-    if (ident !== null && ident !== "") {
-        if (!linkText) {
-            linkText = ident;
-        }
-        return "<a target=\"_blank\" href=\"https://flightaware.com/live/flight/" + ident.trim() + "\">" + linkText + "</a>";
-    }
-
-    return "";
-}
-
-function getFlightAwareModeSLink(code, ident, linkText) {
+function getFlightRadarModeSLink(code, ident, linkText) {
     if (code !== null && code.length > 0 && code[0] !== '~' && code !== "000000") {
-        if (!linkText) {
-            linkText = "FlightAware: " + code.toUpperCase();
+        var url = 'https://fr24.com/';
+        if (ident !== null && ident !== "") {
+            url += ident.trim();
         }
 
-        var linkHtml = "<a target=\"_blank\" href=\"https://flightaware.com/live/modes/" + code ;
-        if (ident !== null && ident !== "") {
-            linkHtml += "/ident/" + ident.trim();
+        if (!linkText) {
+            linkText = "FlightRadar: " + ident.trim().toUpperCase();
         }
-        linkHtml += "/redirect\">" + linkText + "</a>";
+
+        var linkHtml = '<a target="_blank" href="'+ url +'">'+ linkText +'</a>';
         return linkHtml;
     }
 
     return "";
 }
 
-function getFlightAwarePhotoLink(registration) {
+function getFlightRadarPhotoLink(registration) {
     if (registration !== null && registration !== "") {
-        return "<a target=\"_blank\" href=\"https://flightaware.com/photos/aircraft/" + registration.replace(/[^0-9a-z]/ig,'') + "\">See Photos</a>";
+        return "<a target=\"_blank\" href=\"https://www.jetphotos.com/photo/keyword/" + encodeURI(registration) + "\">See Photos</a>";
     }
 
     return "";   
@@ -1861,30 +1849,4 @@ function toggleLayer(element, layer) {
 			}
 		});
 	});
-}
-
-// check status.json if it has a serial number for a flightfeeder
-function flightFeederCheck() {
-	$.ajax('/status.json', {
-		success: function(data) {
-			if (data.type === "flightfeeder") {
-				isFlightFeeder = true;
-				updatePiAwareOrFlightFeeder();
-			}
-		}
-	})
-}
-
-// updates the page to replace piaware with flightfeeder references
-function updatePiAwareOrFlightFeeder() {
-	if (isFlightFeeder) {
-		$('.piAwareLogo').hide();
-		$('.flightfeederLogo').show();
-		PageName = 'FlightFeeder SkyAware';
-	} else {
-		$('.flightfeederLogo').hide();
-		$('.piAwareLogo').show();
-		PageName = 'PiAware SkyAware';
-	}
-	refreshPageTitle();
 }

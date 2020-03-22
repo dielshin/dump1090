@@ -21,22 +21,22 @@ set -e
 
 case "$1" in
     purge)
-        rm -f /etc/default/dump1090-fa
+        rm -f /etc/default/dump1090-fr24
         ;;
 
     remove)
         changed=false
-        if [ -e /etc/lighttpd/conf-enabled/89-dump1090-fa.conf ]
+        if [ -e /etc/lighttpd/conf-enabled/89-dump1090-fr24.conf ]
         then
             echo "Disabling lighttpd integration.." >&2
-            lighty-disable-mod dump1090-fa || true
+            lighty-disable-mod dump1090-fr24 || true
             changed=true
         fi
 
-        if [ -e /etc/lighttpd/conf-enabled/88-dump1090-fa-statcache.conf ]
+        if [ -e /etc/lighttpd/conf-enabled/88-dump1090-fr24-statcache.conf ]
         then
             echo "Disabling lighttpd integration (stat cache).." >&2
-            lighty-disable-mod dump1090-fa-statcache || true
+            lighty-disable-mod dump1090-fr24-statcache || true
             changed=true
         fi
 

@@ -1,0 +1,22 @@
+# dump1090-fr24 service for systemd
+
+[Unit]
+Description=dump1090 ADS-B receiver (FlightRadar24 customization)
+Documentation=https://www.flightradar24.com/build-your-own
+Wants=network.target
+After=network.target
+
+[Service]
+User=dump1090
+RuntimeDirectory=dump1090-fr24
+RuntimeDirectoryMode=0755
+ExecStart=/usr/share/dump1090-fr24/start-dump1090-fr24 --write-json %t/dump1090-fr24 --quiet
+SyslogIdentifier=dump1090-fr24
+Type=simple
+Restart=on-failure
+RestartSec=30
+RestartPreventExitStatus=64
+Nice=-5
+
+[Install]
+WantedBy=default.target

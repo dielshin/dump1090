@@ -48,9 +48,7 @@
 
 		<div id="header" class="infoHeading">
 			<div class="logoContainer">
-				<a href="http://flightaware.com/" target="_blank"><img src="images/fa_logo_color.png" alt="FlightAware" class="flightawareLogo" srcset="images/fa_logo_color.png 1x, images/fa_logo_color@2x.png 2x, images/fa_logo_color@3x.png 3x"></a>
-				<img src="images/pa-sa-logo.png" alt="PiAware SkyAware" class="adsbLogo piAwareLogo" srcset="images/pa-sa-logo.png 1x, images/pa-sa-logo@2x.png 2x, images/pa-sa-logo@3x.png 3x">
-				<img src="images/ff-sa-logo.png" alt="FlightFeeder SkyAware" class="adsbLogo flightfeederLogo" srcset="images/ff-sa-logo.png 1x, images/ff-sa-logo@2x.png 2x, images/ff-sa-logo@3x.png 3x" style="display: none;">
+				<a href="http://flightradar24.com/" target="_blank"><img src="images/fr24_logo_color.png" alt="FlightRadar24" class="flightradarLogo" /></a>
 			</div>
 			<div class="buttonContainer">
 				<div class="dateTime" id="clock_div"></div>
@@ -177,7 +175,7 @@
 												<div class="button buttonTable" id="show_map_button"><span class="buttonText">Show Map</span></div>
 											</td>
 											<td style="text-align: right">
-												<a href="https://github.com/flightaware/dump1090" id="dump1090_version" target="_blank"></a>
+												<a href="https://github.com/dielshin/dump1090" id="dump1090_version" target="_blank"></a>
 											</td>
 										</tr>
 			
@@ -226,8 +224,8 @@
 												<td id="lon" onclick="sortByLongitude();">Longitude</td>
 												<td id="data_source" onclick="sortByDataSource();">Data Source</td>
 												<td id="airframes_mode_s_link">Airframes.org</td>
-												<td id="flightaware_mode_s_link">FlightAware</td>
-												<td id="flightaware_photo_link">Photos</td>
+												<td id="flightradar_mode_s_link">FlightRadar24</td>
+												<td id="jetphotos_photo_link">Photos</td>
 											</tr>
 										</thead>
 										<tbody>
@@ -250,8 +248,8 @@
 												<td style="text-align: right">LON</td>
 												<td style="text-align: right">DATA_SOURCE</td>
 												<td style="text-align: center">AIRFRAMES_MODE_S_LINK</td>
-												<td style="text-align: center">FLIGHTAWARE_MODE_S_LINK</td>
-												<td style="text-align: center">FLIGHTAWARE_PHOTO_LINK</td>
+												<td style="text-align: center">FLIGHTRADAR_MODE_S_LINK</td>
+												<td style="text-align: center">JETPHOTOS_PHOTO_LINK</td>
 											</tr>
 										</tbody>
 									</table>
@@ -285,7 +283,7 @@
 							</div>
 						
 								<div class="infoBlockTopSection">
-									<span id="selected_flightaware_link" class=""></span>
+									<span id="selected_flightradar_link" class=""></span>
 									<div class="infoRow removePadding">
 										<div class="infoHeading infoRowFluid"><span title="The alphanumeric registration code assigned by the country in which the aircraft is registered.">Registration</span>: </div>
 										<div class="infoData infoRowFluid"><span id="selected_registration">n/a</span></div>

@@ -1,25 +1,25 @@
 #!/bin/bash
 ### BEGIN INIT INFO
 #
-# Provides:		dump1090-fa
+# Provides:		dump1090-fr24
 # Required-Start:	$remote_fs
 # Required-Stop:	$remote_fs
 # Default-Start:	2 3 4 5
 # Default-Stop:		0 1 6
-# Short-Description:	dump1090-fa initscript
+# Short-Description:	dump1090-fr24 initscript
 #
 ### END INIT INFO
 
 . /lib/lsb/init-functions
 
-DAEMON=/usr/bin/dump1090-fa
-PIDFILE=/run/dump1090-fa.pid
-WORKDIR=/run/dump1090-fa
+DAEMON=/usr/bin/dump1090-fr24
+PIDFILE=/run/dump1090-fr24.pid
+WORKDIR=/run/dump1090-fr24
 RUNAS=dump1090
 
 test -x $DAEMON || exit 5
 
-. /etc/default/dump1090-fa
+. /etc/default/dump1090-fr24
 
 if [ -f /var/cache/piaware/location.env ]
 then
@@ -27,10 +27,10 @@ then
 fi
 
 PROG_ARGS="$RECEIVER_OPTIONS $DECODER_OPTIONS $NET_OPTIONS $JSON_OPTIONS $PIAWARE_DUMP1090_LOCATION_OPTIONS \
- --write-json /run/dump1090-fa --quiet"
+ --write-json /run/dump1090-fr24 --quiet"
 
 start() {
-    log_daemon_msg "Starting dump1090-fa server" "dump1090-fa"
+    log_daemon_msg "Starting dump1090-fr24 server" "dump1090-fr24"
     mkdir -p $WORKDIR
     chown $RUNAS $WORKDIR
     /sbin/start-stop-daemon --start --oknodo --background --make-pidfile --pidfile $PIDFILE --user $RUNAS --chuid $RUNAS --exec $DAEMON -- $PROG_ARGS
@@ -40,7 +40,7 @@ start() {
 }
 
 stop() {
-    log_daemon_msg "Stopping dump1090-fa server" "dump1090-fa"
+    log_daemon_msg "Stopping dump1090-fr24 server" "dump1090-fr24"
     /sbin/start-stop-daemon --stop --quiet --oknodo --pidfile $PIDFILE --user $RUNAS
     log_end_msg $?
     rm -f $PIDFILE
@@ -69,7 +69,7 @@ case "$1" in
 	exit 3
 	;;
     status)
-	status_of_proc $DAEMON "dump1090-fa server"
+	status_of_proc $DAEMON "dump1090-fr24 server"
 	;;
     *)
 	echo "Usage: $0 {start|stop|restart|try-restart|force-reload|status}"

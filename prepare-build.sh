@@ -11,8 +11,8 @@ then
     exit 1
 fi
 
-export DEBFULLNAME="${DEBFULLNAME:-FlightAware build automation}"
-export DEBEMAIL="${DEBEMAIL:-adsb-devs@flightaware.com}"
+export DEBFULLNAME="${DEBFULLNAME:-FlightRadar24 build automation}"
+export DEBEMAIL="dima@elsh.in"
 
 TOP=`dirname $0`
 DIST=$1

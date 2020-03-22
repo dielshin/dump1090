@@ -12,8 +12,8 @@ The default data comes from a combination of:
 
  * some historical data kindly provided by VRS (unfortunately no longer
    updated) - this data is in vrs.csv.xz; and
- * a data export provided by FlightAware that is updated periodically -
-   this data is in flightaware-*.csv.xz
+ * a data export provided by FlightRadar that is updated periodically -
+   this data is in flightradar-*.csv.xz
 
 The VRS data was extracted by:
 
@@ -23,9 +23,9 @@ $ gunzip BasicAircraftLookup.sqb.gz
 $ tools/vrs-to-csv.py BasicAircraftLookup.sqb >tools/vrs.csv
 ```
 
-The FlightAware data is a subset of the registry information that FlightAware
-uses internally. It contains only the data that FlightAware can redistribute
-to the public; some data sources that FlightAware uses do not allow this and
+The FlightRadar data is a subset of the registry information that FlightRadar
+uses internally. It contains only the data that FlightRadar can redistribute
+to the public; some data sources that FlightRadar uses do not allow this and
 are excluded from the export.
 
 ## Regenerating the json database
@@ -35,7 +35,7 @@ To regenerate the json database from these input files:
 ```sh
 $ rm ../public_html/db/*.json
 $ xzcat vrs.csv.xz | nodejs ./filter-regs.js >vrs-filtered.csv
-$ xzcat flightaware-20191216.csv.xz | nodejs ./filter-regs.js >fa-filtered.csv
+$ xzcat flightradar-20191216.csv.xz | nodejs ./filter-regs.js >fa-filtered.csv
 $ ./csv-to-json.py vrs-filtered.csv fa-filtered.csv ../public_html/db
 ```
 
@@ -43,7 +43,7 @@ Additional CSV files can be given to `csv-to-json.py` if desired.
 
 The contents of public_html/db should be installed where the webmap can find
 them; the Debian packaging puts these in
-/usr/share/dump1090-fa/html/db
+/usr/share/dump1090-fr24/html/db
 
 The CSV format is very simple. The first line must be a header line that names
 the columns. These columns are understood:

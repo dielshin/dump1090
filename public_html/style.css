@@ -378,7 +378,7 @@ select.error, textarea.error, input.error {
     z-index: 99999;
 }
 
-.flightawareLogo {
+.flightradarLogo {
     background-color: #FFF;
     padding-top: 7px;
     padding-bottom: 6px;
@@ -686,7 +686,7 @@ select.error, textarea.error, input.error {
 	text-align: center;
 	background-color: #eee;
 }
-#selected_flightaware_link a {
+#selected_flightradar_link a {
 	background-color: #00a0e2;
 	color: white;
 	text-decoration: none;
